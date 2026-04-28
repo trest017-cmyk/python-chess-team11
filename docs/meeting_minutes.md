@@ -24,175 +24,23 @@
 
 ### Product Backlog Items Defined
 
-
+- **PB-01** — Freeze Spell Verification (5 pts, High priority): verify cast_freeze behavior, charges, cooldown, 3×3 area, and freeze effect
+- **PB-02** — Jump Spell Verification (3 pts, High priority): verify cast_jump range, charges, cooldown, King restriction, empty destination
+- **PB-03** — New Game and Turn Lifecycle (3 pts, High priority): verify new_game() reset and make_move() behavior including en passant
+- **PB-04** — Test Documentation and Process (5 pts, Medium priority): meeting minutes, sprint backlog, test scenarios, execution report
 
 ### Sprint Backlog Populated
 
-
+- **T-01 through T-07** (Freeze tests + TS-01 scenario) → Konrad Trestka
+- **T-08 through T-12** (Jump spell tests TC-12 through TC-23) → Caleb Lee
+- **T-13** (Display tests TC-24 through TC-34) → Sophie Reznik
+- **T-14 through T-16** (New Game + Move Lifecycle tests TC-35 through TC-50; defect table) → Nikita Tuli
+- **T-17, T-18** (Meeting minutes, sprint backlog) → Sophie Reznik
+- **T-19** (Test execution report) → Nikita Tuli
 
 ### Actions
 
-- Everyone:
-- Caleb + Nikita:
-- Sophie:
-- Konrad: 
-
----
-
-## Meeting 2 — Daily Stand-up #1
-
-**Date:** Tuesday, April 28, 2026  
-**Time:** 8:00 PM – 8:15 PM  
-**Location:** Google Meet 
-**Attendees:** Caleb Lee, Sophie Reznik, Konrad Trestka, Nikita Tuli  
-**Scrum Master:** Sophie Reznik
-
-### Stand-up Updates
-
-**Caleb Lee**
-- *What did I do?*
-- *What will I do?*
-- *What's not working?*
-
-**Sophie Reznik**
-- *What did I do?*
-- *What will I do?*
-- *What's not working?*
-
-**Konrad Trestka**
-- *What did I do?*
-- *What will I do?*
-- *What's not working?*
-
-**Nikita Tuli**
-- *What did I do?*
-- *What will I do?*
-- *What's not working?*
-
-### Scrum Master Notes
-
-
-
----
-
-## Meeting 3 — Daily Stand-up #2
-
-**Date:** Thursday, April 30, 2026  
-**Time:** 8:00 PM – 8:20 PM  
-**Location:** Google Meet  
-**Attendees:** Caleb Lee, Sophie Reznik, Konrad Trestka, Nikita Tuli  
-**Scrum Master:** Sophie Reznik
-
-### Stand-up Updates
-
-**Caleb Lee**
-- *What did I do?*
-- *What will I do?*
-- *What's not working?*
-
-**Sophie Reznik**
-- *What did I do?*
-- *What will I do?*
-- *What's not working?*
-
-**Konrad Trestka**
-- *What did I do?*
-- *What will I do?*
-- *What's not working?*
-
-**Nikita Tuli**
-- *What did I do?*
-- *What will I do?*
-- *What's not working?*
-
-### Scrum Master Notes
-
-
-
----
-
-## Meeting 4 — Daily Stand-up #3
-
-**Date:** Saturday, May 2, 2026  
-**Time:** 8:00 PM – 8:20 PM  
-**Location:** Google Meet 
-**Attendees:** Caleb Lee, Sophie Reznik, Konrad Trestka, Nikita Tuli  
-**Scrum Master:** Sophie Reznik
-
-### Stand-up Updates
-
-**Caleb Lee**
-- *What did I do?* 
-- *What will I do?* 
-- *What's not working?* 
-
-**Sophie Reznik**
-- *What did I do?* 
-- *What will I do?* 
-- *What's not working?* 
-
-**Konrad Trestka**
-- *What did I do?*
-- *What will I do?* 
-- *What's not working?* 
-
-**Nikita Tuli**
-- *What did I do?* 
-- *What will I do?* 
-- *What's not working?* 
-
-### Scrum Master Notes
-
-
-
----
-
-## Meeting 5 — Sprint Review
-
-**Date:** Sunday, May 3, 2026  
-**Time:** 8:00 PM – 9:00 PM  
-**Location:** Google Meet 
-**Attendees:** Caleb Lee, Sophie Reznik, Konrad Trestka, Nikita Tuli  
-**Scrum Master:** Sophie Reznik  
-**Product Owner:** Konrad Trestka
-
-### Sprint Goal Review
-
-**Goal:** 
-
-**Outcome:** 
-
-
-
-### Completed Product Backlog Items
-
-
-
-### New Product Backlog Items Created
-
-
-
-### Discussion
-
-
-
----
-
-## Meeting 6 — Sprint Retrospective
-
-**Date:** Sunday, May 4, 2026  
-**Time:** 8:00 PM – 9:00 PM  
-**Location:** Google Meet 
-**Attendees:** Caleb Lee, Sophie Reznik, Konrad Trestka, Nikita Tuli  
-**Scrum Master:** Sophie Reznik
-
-### What Went Well
-
-
-
-### What Did Not Go Well
-
-
-
-### Next Time Let's Try To...
-
+- **Everyone:** Install python-chess and pytest; read through `spell_logic.py` v0.5 fully before the next stand-up
+- **Caleb + Nikita:** Begin writing test stubs for assigned modules before Tuesday
+- **Sophie:** Draft sprint backlog structure and meeting minutes template; start reviewing display methods in `spell_logic.py`
+- **Konrad:** Finalize product backlog entries in `docs/product_backlog.md`; begin writing Freeze spell test stubs (TC-01 through TC-07)
