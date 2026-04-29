@@ -44,3 +44,39 @@
 - **Caleb + Nikita:** Begin writing test stubs for assigned modules before Tuesday
 - **Sophie:** Draft sprint backlog structure and meeting minutes template; start reviewing display methods in `spell_logic.py`
 - **Konrad:** Finalize product backlog entries in `docs/product_backlog.md`; begin writing Freeze spell test stubs (TC-01 through TC-07)
+
+---
+
+## Meeting 2 — Daily Stand-up #1
+
+**Date:** Tuesday, April 28, 2026  
+**Time:** 8:00 PM – 8:15 PM  
+**Location:** Google Meet 
+**Attendees:** Caleb Lee, Sophie Reznik, Konrad Trestka, Nikita Tuli  
+**Scrum Master:** Sophie Reznik
+
+### Stand-up Updates
+
+**Caleb Lee**
+- *What did I do?* Set up test environment; read through Jump spell section of the spec and `spell_logic.py`; wrote test stubs for TC-12 through TC-16
+- *What will I do?* Complete TC-17 through TC-23; document Module 2 cases in `test_case_documentation.md`
+- *What's not working?* Noticed `squares_in_jump_range` uses `range(-3, 4)` which allows Chebyshev distance 3 — suspect D-07; will confirm with a test
+
+**Sophie Reznik**
+- *What did I do?* Created `meeting_minutes.md` skeleton and `sprint_backlog.md` table structure; reviewed `status_text`, `freeze_info_text`, and `jump_info_text` in `spell_logic.py`
+- *What will I do?* Write TC-24 through TC-34 test methods; fill in Module 3 documentation
+- *What's not working?* Nothing blocking
+
+**Konrad Trestka**
+- *What did I do?* Finalized product backlog PB-01 through PB-04 in `docs/`; drafted TC-01 through TC-07 test stubs; confirmed D-01 — `freeze_effect_color` is set to the caster's color instead of the opponent's
+- *What will I do?* Complete TC-08 through TC-11b (freeze area and effect tests); draft `test_scenario.md` outline
+- *What's not working?* Nothing blocking
+
+**Nikita Tuli**
+- *What did I do?* Set up test environment; read spec and `spell_logic.py` in full; started stubs for TC-35 through TC-37
+- *What will I do?* Finish New Game Reset tests TC-35 through TC-42; start Move Lifecycle stubs
+- *What's not working?* `new_game()` appears not to call `board.reset()` — will confirm with TC-35
+
+### Scrum Master Notes
+
+All members on track. Caleb and Nikita have flagged potential D-07 and D-11 early. Next stand-up Thursday April 30.
