@@ -80,3 +80,39 @@
 ### Scrum Master Notes
 
 All members on track. Caleb and Nikita have flagged potential D-07 and D-11 early. Next stand-up Thursday April 30.
+
+---
+
+## Meeting 3 — Daily Stand-up #2
+
+**Date:** Thursday, April 30, 2026  
+**Time:** 8:00 PM – 8:20 PM  
+**Location:** Google Meet  
+**Attendees:** Caleb Lee, Sophie Reznik, Konrad Trestka, Nikita Tuli  
+**Scrum Master:** Sophie Reznik
+
+### Stand-up Updates
+
+**Caleb Lee**
+- *What did I do?* Completed all 12 Jump spell tests (TC-12 through TC-23) and `test_case_documentation.md` Module 2; confirmed D-07 (`squares_in_jump_range` uses `range(-3, 4)` allowing distance 3), D-08 (jump cooldown set to 1 not 2), D-09 (King not blocked), D-10 (no check that destination is empty)
+- *What will I do?* Review Konrad's Freeze tests for consistency; help finalize defect descriptions for D-07 through D-10
+- *What's not working?* Nothing blocking — all Jump tests committed
+
+**Sophie Reznik**
+- *What did I do?* Completed TC-24 through TC-34 display tests and Module 3 documentation; most display tests pass
+- *What will I do?* Update sprint backlog statuses for T-08 through T-13; review all process docs for submission consistency
+- *What's not working?* Nothing blocking
+
+**Konrad Trestka**
+- *What did I do?* Completed TC-08 through TC-11b (freeze area and effect tests); documented D-02 through D-06; drafted `test_scenario.md` with step-by-step procedure and V-01 through V-08 verification checks
+- *What will I do?* Finalize `test_scenario.md` with defect traceability section; review defect descriptions with Nikita
+- *What's not working?* Nothing blocking
+
+**Nikita Tuli**
+- *What did I do?* Completed TC-35 through TC-42 New Game Reset tests; confirmed D-11 (`new_game()` does not call `board.reset()`), D-12 (move stack not cleared), D-13 (`jump_remaining` not reset to 3)
+- *What will I do?* Write TC-43 through TC-48 Move Lifecycle tests; draft test execution report structure
+- *What's not working?* `make_move()` appears to double-flip `board.turn` after a move — will confirm with TC-43
+
+### Scrum Master Notes
+
+PB-01 (Freeze) and PB-02 (Jump) tests effectively complete. PB-03 in progress — Nikita on track to finish Move Lifecycle by Saturday. Sophie flagged that defect descriptions need consistent formatting before final commit.
