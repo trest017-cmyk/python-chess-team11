@@ -116,3 +116,39 @@ All members on track. Caleb and Nikita have flagged potential D-07 and D-11 earl
 ### Scrum Master Notes
 
 PB-01 (Freeze) and PB-02 (Jump) tests effectively complete. PB-03 in progress — Nikita on track to finish Move Lifecycle by Saturday. Sophie flagged that defect descriptions need consistent formatting before final commit.
+
+---
+
+## Meeting 4 — Daily Stand-up #3
+
+**Date:** Saturday, May 2, 2026  
+**Time:** 8:00 PM – 8:20 PM  
+**Location:** Google Meet 
+**Attendees:** Caleb Lee, Sophie Reznik, Konrad Trestka, Nikita Tuli  
+**Scrum Master:** Sophie Reznik
+
+### Stand-up Updates
+
+**Caleb Lee**
+- *What did I do?* Reviewed Nikita's New Game Reset tests and provided feedback; helped format defect descriptions for D-11 through D-13 in the defect summary table; final read-through of Module 2 documentation
+- *What will I do?* Full read-through of `test_case_documentation.md` Modules 1 and 2 before Sprint Review Sunday
+- *What's not working?* Nothing blocking
+
+**Sophie Reznik**
+- *What did I do?* Updated sprint backlog task statuses (T-01 through T-13 marked Completed); finalized meeting minutes through Meeting 3; verified all header dates are consistent across documents
+- *What will I do?* Write Sprint Review notes after Sunday's meeting; do a final pass on all process artifacts for submission
+- *What's not working?* Nothing blocking
+
+**Konrad Trestka**
+- *What did I do?* Finalized `test_scenario.md` including the defect traceability table (defects D-01, D-02, D-03, D-06 mapped to scenario steps); reviewed D-01 through D-10 descriptions for accuracy against `spell_logic.py`
+- *What will I do?* Support Nikita on Move Lifecycle tests; review final defect summary once D-14 through D-16 are added
+- *What's not working?* Nothing blocking
+
+**Nikita Tuli**
+- *What did I do?* Completed TC-43 through TC-48 Move Lifecycle tests; confirmed D-14 (`make_move()` does not flip `board.turn` correctly) and D-15 (check detection fails when chaining moves via `make_move()` because of D-14); added TC-49 en passant test stub (pending commit)
+- *What will I do?* Finish TC-50 (pawn promotion); add D-14 through D-16 to defect summary; write test execution report
+- *What's not working?* D-14 turn-flip bug makes chaining moves unreliable in TC-48 — using `board.push_san()` directly as a workaround in that test
+
+### Scrum Master Notes
+
+TC-49 and TC-50 identified as late-sprint additions covering edge cases missed in planning. All PB items on track for Sprint Review Sunday May 3. Nikita to commit TC-49/50 and the execution report by end of day Sunday.
