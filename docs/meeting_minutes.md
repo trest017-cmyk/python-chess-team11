@@ -152,3 +152,35 @@ PB-01 (Freeze) and PB-02 (Jump) tests effectively complete. PB-03 in progress �
 ### Scrum Master Notes
 
 TC-49 and TC-50 identified as late-sprint additions covering edge cases missed in planning. All PB items on track for Sprint Review Sunday May 3. Nikita to commit TC-49/50 and the execution report by end of day Sunday.
+
+---
+
+## Meeting 5 — Sprint Review
+
+**Date:** Sunday, May 3, 2026  
+**Time:** 8:00 PM – 9:00 PM  
+**Location:** Google Meet 
+**Attendees:** Caleb Lee, Sophie Reznik, Konrad Trestka, Nikita Tuli  
+**Scrum Master:** Sophie Reznik  
+**Product Owner:** Konrad Trestka
+
+### Sprint Goal Review
+
+**Goal:** Write a comprehensive unit test suite for `spell_logic.py` (v0.5), identify all defects by comparing behavior against the specification in `README.md`, and produce complete Scrum process documentation by the Monday deadline.
+
+**Outcome:** Goal met. 60 tests written across 5 modules (Freeze, Jump, Display, New Game Reset, Move Lifecycle). 16 unique defects identified and documented (D-01 through D-16). All Scrum process artifacts are complete or in final review.
+
+### Completed Product Backlog Items
+
+- **PB-01 — Freeze Spell Verification:** 20 tests (TC-01 through TC-11b); 6 defects found (D-01 through D-06). 8 of 20 tests expose implementation bugs; 12 pass.
+- **PB-02 — Jump Spell Verification:** 12 tests (TC-12 through TC-23); 4 defects found (D-07 through D-10). 5 of 12 tests expose bugs; 7 pass.
+- **PB-03 — New Game and Turn Lifecycle:** 28 tests (TC-24 through TC-50); 6 defects found (D-11 through D-16). 6 of 28 tests expose bugs; 22 pass.
+- **PB-04 — Test Documentation and Process:** All artifacts complete — `test_case_documentation.md`, `test_execution_report.md`, `meeting_minutes.md`, `sprint_backlog.md`, `test_scenario.md`.
+
+### New Product Backlog Items Created
+
+None. The project scope is complete.
+
+### Discussion
+
+Team confirmed that all 19 test failures map cleanly to documented defects D-01 through D-16. The highest-impact defect is D-14 (`make_move()` turn-flip) because it cascades into TC-43 and TC-48 and makes multi-move test sequences unreliable. D-06 (center square excluded from freeze area) also cascades, causing TC-08, TC-08b, TC-09, and TC-11 to fail. Two demo tests provided with the assignment also fail — they cover the same root causes as D-01 and D-11.
