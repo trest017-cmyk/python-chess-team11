@@ -276,30 +276,137 @@ class TestFreezeEffect:
 # ================================================================== #
 
 class TestJumpRange:
+    """A piece can jump up to 2 squares in any direction."""
+
+    def test_jump_range_valid(self):
+        """TC-12 | Spec: 'within Chebyshev distance 2'"""
+        game = SpellChessGame()
+        # White knight on b1 jumps to b3 (distance 2, unobstructed)
+        # We need an empty square. b3 is empty.
+        result = game.cast_jump(chess.B1, chess.B3)
+        assert result is True
+
+    def test_jump_range_invalid(self):
+        """
+        TC-13 | Spec: 'at most 2 squares in any direction'
+        Expected: A jump of distance 3 should return False.
+        DEFECT: squares_in_jump_range uses range(-3, 4) which allows distance 3.
+        """
+        game = SpellChessGame()
+        # White rook on a1 jumps to a4 (distance 3). a4 is empty.
+        result = game.cast_jump(chess.A1, chess.A4)
+        assert result is False
+
 
 # ================================================================== #
 #  Jump Spell — Charges                                              #
 # ================================================================== #
 
 class TestJumpCharges:
+    """Each side starts with 3 jump charges; each successful cast costs 1."""
+
+    def test_jump_initial_charges_white(self):
+        """TC-14 | Spec: 'Each side begins the game with 3 jump charges.' (White)"""
+        game = SpellChessGame()
+        assert game.jump_remaining[chess.WHITE] == 3
+
+    def test_jump_decrements_charge_on_cast(self):
+        """TC-15 | Spec: 'Each cast costs 1 charge.'"""
+        game = SpellChessGame()
+        game.cast_jump(chess.B1, chess.B3)
+        assert game.jump_remaining[chess.WHITE] == 2
+
+    def test_jump_blocked_at_zero_charges(self):
+        """TC-16 | Spec: 'When a player has 0 charges remaining, they cannot cast Jump.'"""
+        game = SpellChessGame()
+        game.jump_remaining[chess.WHITE] = 0
+        result = game.cast_jump(chess.B1, chess.B3)
+        assert result is False
+
 
 # ================================================================== #
 #  Jump Spell — Cooldown                                             #
 # ================================================================== #
 
 class TestJumpCooldown:
+    """After casting Jump the caster enters a 2-turn cooldown."""
+
+    def test_jump_cooldown_set_to_two_after_cast(self):
+        """
+        TC-17 | Spec table: 'Jump cooldown after casting: 2 turns.'
+        Expected: jump_cooldown[WHITE] == 2 immediately after cast.
+        DEFECT: cast_jump sets cooldown to 1 instead of 2.
+        """
+        game = SpellChessGame()
+        game.cast_jump(chess.B1, chess.B3)
+        assert game.jump_cooldown[chess.WHITE] == 2
+
+    def test_jump_blocked_while_on_cooldown(self):
+        """TC-18 | Spec: 'The caster cannot cast Jump again until the cooldown reaches 0.'"""
+        game = SpellChessGame()
+        game.jump_cooldown[chess.WHITE] = 1
+        result = game.cast_jump(chess.B1, chess.B3)
+        assert result is False
+
+    def test_jump_cooldown_decrements_on_caster_turn_start(self):
+        """TC-19 | Spec: 'The cooldown decrements by 1 at the start of each of the caster's turns.'"""
+        game = SpellChessGame()
+        game.jump_cooldown[chess.WHITE] = 2
+        game.board.turn = chess.WHITE
+        game.on_turn_start()
+        assert game.jump_cooldown[chess.WHITE] == 1
+
 
 # ================================================================== #
 #  Jump Spell — Once Per Turn                                        #
 # ================================================================== #
 
 class TestJumpOncePerTurn:
+    """A player may cast Jump at most once per turn."""
+
+    def test_jump_blocked_on_second_cast_same_turn(self):
+        """TC-20 | Spec: 'A player may cast Jump once per turn.'"""
+        game = SpellChessGame()
+        game.cast_jump(chess.B1, chess.B3)
+        # Try to jump another piece in the same turn
+        result = game.cast_jump(chess.G1, chess.G3)
+        assert result is False
+
 
 # ================================================================== #
 #  Jump Spell — Restrictions                                         #
 # ================================================================== #
 
 class TestJumpRestrictions:
+    """Jump has restrictions: King cannot jump, destination must be empty, must be own piece."""
+
+    def test_jump_king_is_blocked(self):
+        """
+        TC-21 | Spec: 'The King cannot be jumped — only non-King pieces may be selected.'
+        Expected: Jumping the King returns False.
+        DEFECT: cast_jump does not check if the piece is a King.
+        """
+        game = SpellChessGame()
+        result = game.cast_jump(chess.E1, chess.E3)
+        assert result is False
+
+    def test_jump_destination_must_be_empty(self):
+        """
+        TC-22 | Spec: 'The piece can only land on an empty square — it cannot capture via Jump.'
+        Expected: Jumping onto an occupied square returns False.
+        DEFECT: cast_jump does not check if the destination square is empty.
+        """
+        game = SpellChessGame()
+        # White rook on a1 jumps to a2 (occupied by White pawn)
+        result = game.cast_jump(chess.A1, chess.A2)
+        assert result is False
+
+    def test_jump_must_be_own_piece(self):
+        """TC-23 | Spec: 'player selects one of their own pieces'"""
+        game = SpellChessGame()
+        # White tries to jump Black's pawn on a7
+        result = game.cast_jump(chess.A7, chess.A5)
+        assert result is False
 
 # ================================================================== #
 #  New Game Reset                                                    #
