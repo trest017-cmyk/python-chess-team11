@@ -631,6 +631,267 @@ Team 11
 
 ---
 
+## Module 2: Game State Display
+
+### TC-12 — Status Text Shows White Turn at Start
+
+#### Description
+Verify that a new game displays "white" as the initial current player.
+
+#### Test Inputs
+- New `SpellChessGame` instance
+
+#### Expected Results
+- `game.status_text() == "Turn: White."`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Call `game.status_text()`
+2. Assert the result equals `"Turn: White."`
+
+#### Owner
+Team 11
+
+---
+
+### TC-13 — Status Text Shows Black Turn
+
+#### Description
+Verify that the status display updates when it is black's turn.
+
+#### Test Inputs
+- `game.board.turn = chess.BLACK`
+
+#### Expected Results
+- `game.status_text() == "Turn: Black."`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+- Set `game.board.turn = chess.BLACK`
+
+#### Test Steps
+1. Set `game.board.turn = chess.BLACK`
+2. Call `game.status_text()`
+3. Assert the result equals `"Turn: Black."`
+
+#### Owner
+Team 11
+
+---
+
+### TC-14 — Status Text Shows Check
+
+#### Description
+Verify that the status display indicates when the current player is in check.
+
+#### Test Inputs
+- Board FEN: `"4k3/8/8/8/8/8/8/4R3 b - - 0 1"`
+
+#### Expected Results
+- `game.status_text() == "Turn: Black (check)."`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+- Set the board to a position where Black is in check
+
+#### Test Steps
+1. Call `game.board.set_fen("4k3/8/8/8/8/8/8/4R3 b - - 0 1")`
+2. Call `game.status_text()`
+3. Assert the result equals `"Turn: Black (check)."`
+
+#### Owner
+Team 11
+
+---
+
+### TC-15 — Status Text Shows Checkmate Game Over
+
+#### Description
+Verify that the status display shows the game-over message, termination type, and winner when the game ends by checkmate.
+
+#### Test Inputs
+- Board FEN: `"7k/6Q1/6K1/8/8/8/8/8 b - - 0 1"`
+
+#### Expected Results
+- `game.status_text() == "Game over: CHECKMATE — White wins"`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+- Set the board to a checkmate position with White winning
+
+#### Test Steps
+1. Call `game.board.set_fen("7k/6Q1/6K1/8/8/8/8/8 b - - 0 1")`
+2. Call `game.status_text()`
+3. Assert the result equals `"Game over: CHECKMATE — White wins"`
+
+#### Owner
+Team 11
+
+---
+
+### TC-16 — Freeze Info Text Shows Initial White Charges
+
+#### Description
+Verify that the Freeze display shows White's initial number of Freeze charges.
+
+#### Test Inputs
+- New `SpellChessGame` instance
+
+#### Expected Results
+- `game.freeze_info_text() == "Freeze: 5"`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance with White to move
+
+#### Test Steps
+1. Call `game.freeze_info_text()`
+2. Assert the result equals `"Freeze: 5"`
+
+#### Owner
+Team 11
+
+---
+
+### TC-17 — Freeze Info Text Shows Cooldown
+
+#### Description
+Verify that the Freeze display includes cooldown information when the current player has an active Freeze cooldown.
+
+#### Test Inputs
+- `game.freeze_cooldown[chess.WHITE] = 2`
+
+#### Expected Results
+- `game.freeze_info_text() == "Freeze: 5  (cooldown 2)"`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+- Set White's Freeze cooldown to 2
+
+#### Test Steps
+1. Set `game.freeze_cooldown[chess.WHITE] = 2`
+2. Call `game.freeze_info_text()`
+3. Assert the result equals `"Freeze: 5  (cooldown 2)"`
+
+#### Owner
+Team 11
+
+---
+
+### TC-18 — Freeze Info Text Shows Frozen Area Message
+
+#### Description
+Verify that the Freeze display indicates when the current player's pieces are frozen.
+
+#### Test Inputs
+- `game.board.turn = chess.BLACK`
+- `game.freeze_effect_color = chess.BLACK`
+- `game.freeze_effect_plies_left = 1`
+- `game.freeze_effect_squares = {chess.E7}`
+
+#### Expected Results
+- `game.freeze_info_text() == "Freeze: 5  — pieces in area are frozen"`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+- Manually set the board turn and active Freeze effect state
+
+#### Test Steps
+1. Set `game.board.turn = chess.BLACK`
+2. Set `game.freeze_effect_color = chess.BLACK`
+3. Set `game.freeze_effect_plies_left = 1`
+4. Set `game.freeze_effect_squares = {chess.E7}`
+5. Call `game.freeze_info_text()`
+6. Assert the result equals `"Freeze: 5  — pieces in area are frozen"`
+
+#### Owner
+Team 11
+
+---
+
+### TC-19 — Jump Info Text Shows Initial White Charges
+
+#### Description
+Verify that the Jump display shows White's initial number of Jump charges.
+
+#### Test Inputs
+- New `SpellChessGame` instance
+
+#### Expected Results
+- `game.jump_info_text() == "Jump: 3"`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance with White to move
+
+#### Test Steps
+1. Call `game.jump_info_text()`
+2. Assert the result equals `"Jump: 3"`
+
+#### Owner
+Team 11
+
+---
+
+### TC-20 — Jump Info Text Shows Cooldown
+
+#### Description
+Verify that the Jump display includes cooldown information when the current player has an active Jump cooldown.
+
+#### Test Inputs
+- `game.jump_cooldown[chess.WHITE] = 1`
+
+#### Expected Results
+- `game.jump_info_text() == "Jump: 3  (cooldown 1)"`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+- Set White's Jump cooldown to 1
+
+#### Test Steps
+1. Set `game.jump_cooldown[chess.WHITE] = 1`
+2. Call `game.jump_info_text()`
+3. Assert the result equals `"Jump: 3  (cooldown 1)"`
+
+#### Owner
+Team 11
+
 # Defect Summary
 
 | Defect # | TC(s) | Location in Code | Description |
