@@ -631,6 +631,338 @@ Team 11
 
 ---
 
+## Module 2: Jump Spell
+
+### TC-12 — Jump Range Valid
+#### Description
+Verify that a piece can jump to a square within a Chebyshev distance of 2, ignoring obstacles.
+
+#### Test Inputs
+- `piece_sq`: `chess.B1` (White Knight)
+- `dest_sq`: `chess.B3` (Empty square, distance 2)
+
+#### Expected Results
+- `cast_jump(chess.B1, chess.B3)` returns `True`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Call `result = game.cast_jump(chess.B1, chess.B3)`
+2. Assert `result is True`
+
+#### Owner
+Team 11
+
+---
+
+### TC-13 — Jump Range Invalid
+#### Description
+Verify that a piece cannot jump to a square beyond a Chebyshev distance of 2.
+
+#### Test Inputs
+- `piece_sq`: `chess.A1` (White Rook)
+- `dest_sq`: `chess.A4` (Empty square, distance 3)
+
+#### Expected Results
+- `cast_jump(chess.A1, chess.A4)` returns `False`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Call `result = game.cast_jump(chess.A1, chess.A4)`
+2. Assert `result is False`
+
+#### Owner
+Team 11
+
+---
+
+### TC-14 — White Starts with 3 Jump Charges
+#### Description
+Verify that White begins the game with 3 jump charges as specified.
+
+#### Test Inputs
+- None
+
+#### Expected Results
+- `game.jump_remaining[chess.WHITE] == 3`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Read `game.jump_remaining[chess.WHITE]`
+2. Assert the value equals `3`
+
+#### Owner
+Team 11
+
+---
+
+### TC-15 — Jump Decrements Charge on Cast
+#### Description
+Verify that casting the Jump spell decrements the caster's charge count by 1.
+
+#### Test Inputs
+- `piece_sq`: `chess.B1`
+- `dest_sq`: `chess.B3`
+
+#### Expected Results
+- `game.jump_remaining[chess.WHITE] == 2`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Call `game.cast_jump(chess.B1, chess.B3)`
+2. Assert `game.jump_remaining[chess.WHITE] == 2`
+
+#### Owner
+Team 11
+
+---
+
+### TC-16 — Jump Blocked at Zero Charges
+#### Description
+Verify that a player cannot cast Jump when they have 0 charges remaining.
+
+#### Test Inputs
+- `jump_remaining[WHITE] = 0`
+- `piece_sq`: `chess.B1`
+- `dest_sq`: `chess.B3`
+
+#### Expected Results
+- `cast_jump(chess.B1, chess.B3)` returns `False`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+- Set `game.jump_remaining[chess.WHITE] = 0`
+
+#### Test Steps
+1. Call `result = game.cast_jump(chess.B1, chess.B3)`
+2. Assert `result is False`
+
+#### Owner
+Team 11
+
+---
+
+### TC-17 — Jump Cooldown Set to 2 After Cast
+#### Description
+Verify that casting Jump sets the caster's cooldown to 2 turns as specified.
+
+#### Test Inputs
+- `piece_sq`: `chess.B1`
+- `dest_sq`: `chess.B3`
+
+#### Expected Results
+- `game.jump_cooldown[chess.WHITE] == 2`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Call `game.cast_jump(chess.B1, chess.B3)`
+2. Assert `game.jump_cooldown[chess.WHITE] == 2`
+
+#### Owner
+Team 11
+
+---
+
+### TC-18 — Jump Blocked While on Cooldown
+#### Description
+Verify that a player cannot cast Jump while their cooldown counter is greater than 0.
+
+#### Test Inputs
+- `jump_cooldown[WHITE] = 1`
+- `piece_sq`: `chess.B1`
+- `dest_sq`: `chess.B3`
+
+#### Expected Results
+- `cast_jump(chess.B1, chess.B3)` returns `False`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+- Set `game.jump_cooldown[chess.WHITE] = 1`
+
+#### Test Steps
+1. Call `result = game.cast_jump(chess.B1, chess.B3)`
+2. Assert `result is False`
+
+#### Owner
+Team 11
+
+---
+
+### TC-19 — Jump Cooldown Decrements at Turn Start
+#### Description
+Verify that the jump cooldown decrements by 1 when `on_turn_start()` is called at the start of the caster's turn.
+
+#### Test Inputs
+- `jump_cooldown[WHITE] = 2`
+
+#### Expected Results
+- `game.jump_cooldown[chess.WHITE] == 1` after `on_turn_start()`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+- Set `game.jump_cooldown[chess.WHITE] = 2`
+- Set `game.board.turn = chess.WHITE`
+
+#### Test Steps
+1. Call `game.on_turn_start()`
+2. Assert `game.jump_cooldown[chess.WHITE] == 1`
+
+#### Owner
+Team 11
+
+---
+
+### TC-20 — Jump Blocked on Second Cast Same Turn
+#### Description
+Verify that a player may not cast Jump more than once per turn.
+
+#### Test Inputs
+- First cast: `chess.B1` to `chess.B3`
+- Second cast: `chess.G1` to `chess.G3`
+
+#### Expected Results
+- First cast returns `True`
+- Second cast returns `False`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Call `game.cast_jump(chess.B1, chess.B3)`
+2. Call `result = game.cast_jump(chess.G1, chess.G3)`
+3. Assert `result is False`
+
+#### Owner
+Team 11
+
+---
+
+### TC-21 — Jump Blocked for King
+#### Description
+Verify that the King cannot be jumped.
+
+#### Test Inputs
+- `piece_sq`: `chess.E1` (White King)
+- `dest_sq`: `chess.E3`
+
+#### Expected Results
+- `cast_jump(chess.E1, chess.E3)` returns `False`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Call `result = game.cast_jump(chess.E1, chess.E3)`
+2. Assert `result is False`
+
+#### Owner
+Team 11
+
+---
+
+### TC-22 — Jump Destination Must Be Empty
+#### Description
+Verify that the piece can only land on an empty square.
+
+#### Test Inputs
+- `piece_sq`: `chess.A1`
+- `dest_sq`: `chess.A2` (Occupied by White Pawn)
+
+#### Expected Results
+- `cast_jump(chess.A1, chess.A2)` returns `False`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Call `result = game.cast_jump(chess.A1, chess.A2)`
+2. Assert `result is False`
+
+#### Owner
+Team 11
+
+---
+
+### TC-23 — Jump Must Be Own Piece
+#### Description
+Verify that a player can only cast Jump on their own pieces.
+
+#### Test Inputs
+- `piece_sq`: `chess.A7` (Black Pawn)
+- `dest_sq`: `chess.A5`
+
+#### Expected Results
+- `cast_jump(chess.A7, chess.A5)` returns `False`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Call `result = game.cast_jump(chess.A7, chess.A5)`
+2. Assert `result is False`
+
+#### Owner
+Team 11
+
+---
+
 # Defect Summary
 
 | Defect # | TC(s) | Location in Code | Description |
@@ -641,3 +973,7 @@ Team 11
 | D-04 | TC-06 | `on_turn_start` lines 221–222 | `freeze_cooldown` is never decremented; only `jump_cooldown` is |
 | D-05 | TC-07 | `cast_freeze` missing line | `spell_casted_this_turn` never set to `True` (masked in practice by cooldown) |
 | D-06 | TC-08, TC-08b, TC-09, TC-11 | `squares_in_3x3` lines 48–50 | Guard `if df==0 and dr==0: continue` excludes the center square from the area |
+| D-07 | TC-13 | `squares_in_jump_range` lines 63–64 | `range(-3, 4)` computes Chebyshev distance ≤ 3 instead of spec value 2 |
+| D-08 | TC-17 | `cast_jump` line 187 | Jump cooldown set to `1` instead of spec value `2` |
+| D-09 | TC-21 | `cast_jump` | Missing check to prevent the King from being jumped |
+| D-10 | TC-22 | `cast_jump` | Missing check to ensure destination square is empty |
