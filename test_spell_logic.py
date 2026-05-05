@@ -426,41 +426,41 @@ class TestGameStateDisplay:
     """Display should accurately reflect the current game state."""
 
     def test_status_text_shows_white_turn_at_start(self):
-        """TC-12 | New games should display white turn at start."""
+        """TC-24 | New games should display white turn at start."""
         game = SpellChessGame()
         assert game.status_text() == "Turn: White."
         
     def test_status_text_shows_black_turn(self):
-        """TC-13 | Display should update when it is black's turn."""
+        """TC-25 | Display should update when it is black's turn."""
         game = SpellChessGame()
         game.board.turn = chess.BLACK
         assert game.status_text() == "Turn: Black."
         
     def test_status_text_shows_check(self):
-        """TC-14 | Display should show check when current player is in check."""
+        """TC-26 | Display should show check when current player is in check."""
         game = SpellChessGame()
         game.board.set_fen("4k3/8/8/8/8/8/8/4R3 b - - 0 1")
         assert game.status_text() == "Turn: Black (check)."
         
     def test_status_text_shows_checkmate_game_over(self):
-        """TC-15 | Display at end of game should show end result."""
+        """TC-27 | Display at end of game should show end result."""
         game = SpellChessGame()
         game.board.set_fen("7k/6Q1/6K1/8/8/8/8/8 b - - 0 1")
         assert game.status_text() == "Game over: CHECKMATE — White wins"
         
     def test_freeze_info_text_initial_white(self):
-        """TC-16 | Display should show white's initial freeze charges."""
+        """TC-28 | Display should show white's initial freeze charges."""
         game = SpellChessGame()
         assert game.freeze_info_text() == "Freeze: 5"
         
     def test_freeze_info_text_shows_cooldown(self):
-        """TC-17 | Display should show freeze cooldown when active."""
+        """TC-29 | Display should show freeze cooldown when active."""
         game = SpellChessGame()
         game.freeze_cooldown[chess.WHITE] = 2
         assert game.freeze_info_text() == "Freeze: 5  (cooldown 2)"
         
     def test_freeze_info_text_shows_frozen_area_message(self):
-        """TC-18 | Display should show when current player's pieces are frozen."""
+        """TC-30 | Display should show when current player's pieces are frozen."""
         game = SpellChessGame()
         game.board.turn = chess.BLACK
         game.freeze_effect_color = chess.BLACK
@@ -470,12 +470,12 @@ class TestGameStateDisplay:
         assert game.freeze_info_text() == "Freeze: 5  — pieces in area are frozen"
         
     def test_jump_info_text_initial_white(self):
-        """TC-19 | Display should show white's initial jump charges."""
+        """TC-31 | Display should show white's initial jump charges."""
         game = SpellChessGame()
         assert game.jump_info_text() == "Jump: 3"
         
     def test_jump_info_text_shows_cooldown(self):
-        """TC-20 | Display should show jump cooldown when active."""
+        """TC-32 | Display should show jump cooldown when active."""
         game = SpellChessGame()
         game.jump_cooldown[chess.WHITE] = 1
         assert game.jump_info_text() == "Jump: 3  (cooldown 1)"
