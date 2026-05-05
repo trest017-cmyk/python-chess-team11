@@ -1685,6 +1685,73 @@ Verify that the system correctly detects check during gameplay.
 
 #### Owner
 Team 11
+
+---
+### TC-49 — En Passant Execution
+
+#### Description
+Verify that the En Passant capture works correctly, moving the capturing pawn to the destination and removing the captured pawn from the board.
+
+#### Test Inputs
+- Board FEN: `rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3`
+- Move: `e5` → `d6` (En Passant)
+
+#### Expected Results
+- `make_move(chess.E5, chess.D6)` returns `True`
+- White Pawn exists at `d6`
+- Black Pawn at `d5` is removed (`None`)
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+- Set board to En Passant setup FEN
+
+#### Test Steps
+1. Call `game.board.set_fen("rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3")`
+2. Call `result = game.make_move(chess.E5, chess.D6)`
+3. Assert `result is True`
+4. Assert `game.board.piece_at(chess.D6).piece_type == chess.PAWN`
+5. Assert `game.board.piece_at(chess.D5)` is `None`
+
+#### Owner
+Team 11
+
+---
+
+### TC-50 — Pawn Promotion to Queen
+
+#### Description
+Verify that a pawn reaching the 8th rank is correctly promoted to a Queen.
+
+#### Test Inputs
+- Board FEN: `8/P7/8/8/8/8/8/k6K w - - 0 1` (White Pawn on a7)
+- Move: `a7` → `a8` (Promotion to Queen)
+
+#### Expected Results
+- Piece at `a8` is a `QUEEN`
+- Piece color is `WHITE`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+- Set board to promotion setup FEN
+
+#### Test Steps
+1. Call `game.board.set_fen("8/P7/8/8/8/8/8/k6K w - - 0 1")`
+2. Push promotion move: `chess.Move(chess.A7, chess.A8, promotion=chess.QUEEN)`
+3. Call `game.after_move_pushed()`
+4. Assert piece at `chess.A8` is not `None`
+5. Assert piece type is `chess.QUEEN`
+6. Assert piece color is `chess.WHITE`
+
+#### Owner
+Team 11
 ---
 # Defect Summary
 
@@ -1700,3 +1767,9 @@ Team 11
 | D-08 | TC-17 | `cast_jump` line 187 | Jump cooldown set to `1` instead of spec value `2` |
 | D-09 | TC-21 | `cast_jump` | Missing check to prevent the King from being jumped |
 | D-10 | TC-22 | `cast_jump` | Missing check to ensure destination square is empty |
+| D-11 | TC-35 | `new_game` | Board fails to reset to `STARTING_FEN`; likely `self.board.reset()` is missing |
+| D-12 | TC-37 | `new_game` | `self.board.move_stack` is not cleared/reset during game initialization |
+| D-13 | TC-40 | `new_game` | `jump_remaining` values are not being reset to the starting value of 3 |
+| D-14 | TC-43 | `make_move` | Turn logic failing to swap `self.board.turn` after a successful move |
+| D-15 | TC-48 | `make_move` | System fails to detect check state after a move sequence | 
+| D-16 | TC-49 | `make_move` | En passant move rejected as illegal; logic likely missing `board.has_pseudo_legal_en_passant()` check |
