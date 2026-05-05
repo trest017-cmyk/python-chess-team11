@@ -1700,3 +1700,8 @@ Team 11
 | D-08 | TC-17 | `cast_jump` line 187 | Jump cooldown set to `1` instead of spec value `2` |
 | D-09 | TC-21 | `cast_jump` | Missing check to prevent the King from being jumped |
 | D-10 | TC-22 | `cast_jump` | Missing check to ensure destination square is empty |
+| D-11 | TC-35 | `new_game` | Board fails to reset to `STARTING_FEN`; likely `self.board.reset()` is missing |
+| D-12 | TC-37 | `new_game` | `self.board.move_stack` is not cleared/reset during game initialization |
+| D-13 | TC-40 | `new_game` | `jump_remaining` values are not being reset to the starting value of 3 |
+| D-14 | TC-43 | `make_move` | Turn logic failing to swap `self.board.turn` after a successful move |
+| D-15 | TC-48 | `make_move` | System fails to detect check state after a move sequence | 
