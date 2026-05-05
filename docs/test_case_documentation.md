@@ -1224,6 +1224,66 @@ Verify that the Jump display includes cooldown information when the current play
 #### Owner
 Team 11
 
+---
+
+### TC-33 — Status Text Shows Stalemate Draw
+
+#### Description
+Verify that the status display shows the correct game-over message when the game ends in a draw by stalemate.
+
+#### Test Inputs
+- Board FEN: `"7k/5Q2/7K/8/8/8/8/8 b - - 0 1"`
+
+#### Expected Results
+- `game.status_text() == "Game over: STALEMATE — Draw"`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+- Set the board to a stalemate position
+
+#### Test Steps
+1. Call `game.board.set_fen("7k/5Q2/7K/8/8/8/8/8 b - - 0 1")`
+2. Call `game.status_text()`
+3. Assert the result equals `"Game over: STALEMATE — Draw"`
+
+#### Owner
+Team 11
+
+---
+
+### TC-34 — Status Text Shows Black Checkmate Win
+
+#### Description
+Verify that the status display correctly shows a Black victory when the game ends in checkmate.
+
+#### Test Inputs
+- Board FEN: `"7K/6q1/6k1/8/8/8/8/8 w - - 0 1"`
+
+#### Expected Results
+- `game.status_text() == "Game over: CHECKMATE — Black wins"`
+
+#### Dependencies
+- `python-chess` library  
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance  
+- Set the board to a checkmate position with Black winning
+
+#### Test Steps
+1. Call `game.board.set_fen("7K/6q1/6k1/8/8/8/8/8 w - - 0 1")`  
+2. Call `game.status_text()`  
+3. Assert the result equals `"Game over: CHECKMATE — Black wins"`
+
+#### Owner
+Team 11
+
+---
+
 # Defect Summary
 
 | Defect # | TC(s) | Location in Code | Description |

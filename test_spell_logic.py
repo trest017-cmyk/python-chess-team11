@@ -479,3 +479,15 @@ class TestGameStateDisplay:
         game = SpellChessGame()
         game.jump_cooldown[chess.WHITE] = 1
         assert game.jump_info_text() == "Jump: 3  (cooldown 1)"
+        
+    def test_shows_stalemate_draw(self):
+        """TC-33 | Display should show stalemate draw result."""
+        game = SpellChessGame()
+        game.board.set_fen("7k/5Q2/7K/8/8/8/8/8 b - - 0 1")
+        assert game.status_text() == "Game over: STALEMATE — Draw"
+        
+    def test_shows_black_checkmate_win(self):
+        """TC-34 | Display at end of game should show Black checkmate result."""
+        game = SpellChessGame()
+        game.board.set_fen("7K/6q1/6k1/8/8/8/8/8 w - - 0 1")
+        assert game.status_text() == "Game over: CHECKMATE — Black wins"
