@@ -963,9 +963,9 @@ Team 11
 
 ---
 
-## Module 2: Game State Display
+## Module 3: Game State Display
 
-### TC-12 — Status Text Shows White Turn at Start
+### TC-24 — Status Text Shows White Turn at Start
 
 #### Description
 Verify that a new game displays "white" as the initial current player.
@@ -992,7 +992,7 @@ Team 11
 
 ---
 
-### TC-13 — Status Text Shows Black Turn
+### TC-25 — Status Text Shows Black Turn
 
 #### Description
 Verify that the status display updates when it is black's turn.
@@ -1021,7 +1021,7 @@ Team 11
 
 ---
 
-### TC-14 — Status Text Shows Check
+### TC-26 — Status Text Shows Check
 
 #### Description
 Verify that the status display indicates when the current player is in check.
@@ -1050,7 +1050,7 @@ Team 11
 
 ---
 
-### TC-15 — Status Text Shows Checkmate Game Over
+### TC-27 — Status Text Shows Checkmate Game Over
 
 #### Description
 Verify that the status display shows the game-over message, termination type, and winner when the game ends by checkmate.
@@ -1079,7 +1079,7 @@ Team 11
 
 ---
 
-### TC-16 — Freeze Info Text Shows Initial White Charges
+### TC-28 — Freeze Info Text Shows Initial White Charges
 
 #### Description
 Verify that the Freeze display shows White's initial number of Freeze charges.
@@ -1106,7 +1106,7 @@ Team 11
 
 ---
 
-### TC-17 — Freeze Info Text Shows Cooldown
+### TC-29 — Freeze Info Text Shows Cooldown
 
 #### Description
 Verify that the Freeze display includes cooldown information when the current player has an active Freeze cooldown.
@@ -1135,7 +1135,7 @@ Team 11
 
 ---
 
-### TC-18 — Freeze Info Text Shows Frozen Area Message
+### TC-30 — Freeze Info Text Shows Frozen Area Message
 
 #### Description
 Verify that the Freeze display indicates when the current player's pieces are frozen.
@@ -1170,7 +1170,7 @@ Team 11
 
 ---
 
-### TC-19 — Jump Info Text Shows Initial White Charges
+### TC-31 — Jump Info Text Shows Initial White Charges
 
 #### Description
 Verify that the Jump display shows White's initial number of Jump charges.
@@ -1197,7 +1197,7 @@ Team 11
 
 ---
 
-### TC-20 — Jump Info Text Shows Cooldown
+### TC-32 — Jump Info Text Shows Cooldown
 
 #### Description
 Verify that the Jump display includes cooldown information when the current player has an active Jump cooldown.

@@ -297,7 +297,6 @@ class TestJumpRange:
         result = game.cast_jump(chess.A1, chess.A4)
         assert result is False
 
-    None
 # ================================================================== #
 #  Jump Spell — Charges                                              #
 # ================================================================== #
@@ -322,8 +321,7 @@ class TestJumpCharges:
         game.jump_remaining[chess.WHITE] = 0
         result = game.cast_jump(chess.B1, chess.B3)
         assert result is False
-
-    None
+        
 # ================================================================== #
 #  Jump Spell — Cooldown                                             #
 # ================================================================== #
@@ -355,8 +353,7 @@ class TestJumpCooldown:
         game.board.turn = chess.WHITE
         game.on_turn_start()
         assert game.jump_cooldown[chess.WHITE] == 1
-
-    None
+        
 # ================================================================== #
 #  Jump Spell — Once Per Turn                                        #
 # ================================================================== #
@@ -372,7 +369,6 @@ class TestJumpOncePerTurn:
         result = game.cast_jump(chess.G1, chess.G3)
         assert result is False
 
-    None
 # ================================================================== #
 #  Jump Spell — Restrictions                                         #
 # ================================================================== #
@@ -407,19 +403,19 @@ class TestJumpRestrictions:
         # White tries to jump Black's pawn on a7
         result = game.cast_jump(chess.A7, chess.A5)
         assert result is False
-    None
+
 # ================================================================== #
 #  New Game Reset                                                    #
 # ================================================================== #
 
 class TestNewGameReset:
-    None
+    None # remove this once merged
 # ================================================================== #
 #  Move Lifecycle                                                    #
 # ================================================================== #
 
 class TestMoveLifecycle:
-    None
+    None # remove this once merged
 
 # ================================================================== #
 #  Game State Display                                                #
