@@ -409,13 +409,175 @@ class TestJumpRestrictions:
 # ================================================================== #
 
 class TestNewGameReset:
-    None # remove this once merged
+    """New_game() must restore full canonical board state."""
+
+    def test_board_resets_to_starting_position(self):
+        """TC-35| Board reset requirement."""
+        game = SpellChessGame()
+
+        game.board.push_san("e4")
+        game.new_game()
+
+        assert game.board.fen() == chess.STARTING_FEN
+
+    def test_turn_resets_to_white(self):
+        """TC-36 | Turn must reset to WHITE."""
+        game = SpellChessGame()
+
+        game.board.push_san("e4")
+        game.board.push_san("e5")
+
+        game.new_game()
+
+        assert game.board.turn == chess.WHITE
+
+    def test_move_history_cleared_after_reset(self):
+        """TC-37 | Move history must be cleared."""
+        game = SpellChessGame()
+
+        game.board.push_san("e4")
+        game.board.push_san("e5")
+
+        game.new_game()
+
+        assert len(game.board.move_stack) == 0
+
+    def test_freeze_state_reset(self):
+        """TC-38 | Freeze state must reset completely."""
+        game = SpellChessGame()
+
+        game.cast_freeze(chess.E5)
+
+        game.new_game()
+
+        assert game.freeze_effect_color is None
+        assert game.freeze_effect_squares == set()
+        assert game.freeze_effect_plies_left == 0
+
+    def test_freeze_charges_reset(self):
+        """TC-39 | Freeze charges reset to 5."""
+        game = SpellChessGame()
+
+        game.freeze_remaining[chess.WHITE] = 2
+        game.freeze_remaining[chess.BLACK] = 1
+
+        game.new_game()
+
+        assert game.freeze_remaining[chess.WHITE] == 5
+        assert game.freeze_remaining[chess.BLACK] == 5
+
+    def test_jump_charges_reset(self):
+        """TC-40 | Jump charges reset to 3."""
+        game = SpellChessGame()
+
+        game.jump_remaining[chess.WHITE] = 0
+        game.jump_remaining[chess.BLACK] = 1
+
+        game.new_game()
+
+        assert game.jump_remaining[chess.WHITE] == 3
+        assert game.jump_remaining[chess.BLACK] == 3
+
+    def test_cooldowns_reset(self):
+        """TC-41 | Cooldowns reset to 0."""
+        game = SpellChessGame()
+
+        game.freeze_cooldown[chess.WHITE] = 2
+        game.freeze_cooldown[chess.BLACK] = 1
+        game.jump_cooldown[chess.WHITE] = 1
+        game.jump_cooldown[chess.BLACK] = 1
+
+        game.new_game()
+
+        assert game.freeze_cooldown[chess.WHITE] == 0
+        assert game.freeze_cooldown[chess.BLACK] == 0
+        assert game.jump_cooldown[chess.WHITE] == 0
+        assert game.jump_cooldown[chess.BLACK] == 0
+
+    def test_spell_cast_flags_reset(self):
+        """TC-42 | Per-turn spell flags reset."""
+        game = SpellChessGame()
+
+        game.spell_casted_this_turn = True
+        game.jump_casted_this_turn = True
+        game.freeze_targeting = True  # included even if unused
+
+        game.new_game()
+
+        assert game.spell_casted_this_turn is False
+        assert game.jump_casted_this_turn is False
+        assert game.freeze_targeting is False
 # ================================================================== #
 #  Move Lifecycle                                                    #
 # ================================================================== #
 
 class TestMoveLifecycle:
-    None # remove this once merged
+    """Validates full move execution pipeline."""
+
+    def test_move_switches_turn(self):
+        """TC-43 | After a valid move, turn switches."""
+        game = SpellChessGame()
+
+        assert game.board.turn == chess.WHITE
+
+        game.make_move(chess.E2, chess.E4)
+
+        assert game.board.turn == chess.BLACK
+
+    def test_move_updates_board_state(self):
+        """TC-44 | Piece must appear on destination square."""
+        game = SpellChessGame()
+
+        game.make_move(chess.E2, chess.E4)
+
+        piece = game.board.piece_at(chess.E4)
+
+        assert piece is not None
+        assert piece.piece_type == chess.PAWN
+        assert piece.color == chess.WHITE
+
+    def test_illegal_move_rejected(self):
+        """TC-45 | Illegal moves must not be applied."""
+        game = SpellChessGame()
+
+        # Knight cannot move like bishop
+        result = game.make_move(chess.B1, chess.B3)
+
+        assert result is False
+        assert game.board.piece_at(chess.B3) is None
+
+    def test_cannot_move_opponent_piece(self):
+        """TC-46 | Player cannot move opponent's piece."""
+        game = SpellChessGame()
+
+        # White to move, but try moving black pawn
+        result = game.make_move(chess.E7, chess.E5)
+
+        assert result is False
+        assert game.board.piece_at(chess.E5) is None
+
+    def test_move_history_exists_after_move(self):
+        """TC-47 | Move must be recorded in move stack."""
+        game = SpellChessGame()
+
+        game.make_move(chess.E2, chess.E4)
+
+        assert len(game.board.move_stack) == 1
+
+    def test_check_state_detected(self):
+        """TC-48 | System must detect check state."""
+        game = SpellChessGame()
+
+        # Scholar's mate sequence
+        game.make_move(chess.E2, chess.E4)
+        game.make_move(chess.E7, chess.E5)
+        game.make_move(chess.D1, chess.H5)
+        game.make_move(chess.B8, chess.C6)
+        game.make_move(chess.F1, chess.C4)
+        game.make_move(chess.G8, chess.F6)
+        game.make_move(chess.H5, chess.F7)
+
+        assert game.board.is_check()
 
 # ================================================================== #
 #  Game State Display                                                #

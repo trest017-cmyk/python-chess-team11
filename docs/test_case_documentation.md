@@ -1283,7 +1283,409 @@ Verify that the status display correctly shows a Black victory when the game end
 Team 11
 
 ---
+### TC-35 — Board Resets to Starting Position
 
+#### Description
+Verify that calling `new_game()` restores the chess board to the initial starting position.
+
+#### Test Inputs
+- A move: `e4`
+
+#### Expected Results
+- `game.board.fen()` equals `chess.STARTING_FEN`
+
+#### Dependencies
+- `python-chess` library  
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Call `game.board.push_san("e4")`
+2. Call `game.new_game()`
+3. Assert `game.board.fen() == chess.STARTING_FEN`
+
+#### Owner
+Team 11
+
+---
+
+### TC-36 — Turn Resets to White
+
+#### Description
+Verify that a new game resets the turn to White.
+
+#### Test Inputs
+- Moves played before reset: `e4`, `e5`
+
+#### Expected Results
+- `game.board.turn == chess.WHITE`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Call `game.board.push_san("e4")`
+2. Call `game.board.push_san("e5")`
+3. Call `game.new_game()`
+4. Assert `game.board.turn == chess.WHITE`
+
+#### Owner
+Team 11
+
+---
+
+### TC-37 — Move History Cleared After Reset
+
+#### Description
+Verify that all previous moves are cleared after calling `new_game()`.
+
+#### Test Inputs
+- Moves played before reset: `e4`, `e5`
+
+#### Expected Results
+- `len(game.board.move_stack) == 0`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Call `game.board.push_san("e4")`
+2. Call `game.board.push_san("e5")`
+3. Call `game.new_game()`
+4. Assert `len(game.board.move_stack) == 0`
+
+#### Owner
+Team 11
+
+---
+
+### TC-38 — Freeze State Resets Completely
+
+#### Description
+Verify that all Freeze spell state is cleared after a new game starts.
+
+#### Test Inputs
+- Active freeze cast on `E5`
+
+#### Expected Results
+- `freeze_effect_color` is `None`
+- `freeze_effect_squares == set()`
+- `freeze_effect_plies_left == 0`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Call `game.cast_freeze(chess.E5)`
+2. Call `game.new_game()`
+3. Assert `game.freeze_effect_color` is `None`
+4. Assert `game.freeze_effect_squares == set()`
+5. Assert `game.freeze_effect_plies_left == 0`
+
+#### Owner
+Team 11
+
+---
+
+### TC-39 — Freeze Charges Reset to 5
+
+#### Description
+Verify that Freeze charges reset to the starting value of 5.
+
+#### Test Inputs
+- Modified values: `freeze_remaining[WHITE] = 2`, `freeze_remaining[BLACK] = 1`
+
+#### Expected Results
+- Both sides have 5 charges after reset
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Set `game.freeze_remaining[chess.WHITE] = 2`
+2. Set `game.freeze_remaining[chess.BLACK] = 1`
+3. Call `game.new_game()`
+4. Assert `game.freeze_remaining[chess.WHITE] == 5`
+5. Assert `game.freeze_remaining[chess.BLACK] == 5`
+
+#### Owner
+Team 11
+
+---
+
+### TC-40 — Jump Charges Reset to 3
+
+#### Description
+Verify that Jump charges reset to the starting value of 3.
+
+#### Test Inputs
+- Modified values: `jump_remaining[WHITE] = 0`, `jump_remaining[BLACK] = 1`
+
+#### Expected Results
+- Both sides have 3 charges after reset
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Set `game.jump_remaining[chess.WHITE] = 0`
+2. Set `game.jump_remaining[chess.BLACK] = 1`
+3. Call `game.new_game()`
+4. Assert `game.jump_remaining[chess.WHITE] == 3`
+5. Assert `game.jump_remaining[chess.BLACK] == 3`
+
+#### Owner
+Team 11
+
+---
+
+### TC-41 — Cooldowns Reset to 0
+
+#### Description
+Verify that all spell cooldowns reset to zero after starting a new game.
+
+#### Test Inputs
+- Modified cooldown values: `freeze_cooldown[WHITE] = 2`, `jump_cooldown[WHITE] = 1`, etc.
+
+#### Expected Results
+- All cooldowns equal 0
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Set `game.freeze_cooldown[chess.WHITE] = 2`
+2. Set `game.jump_cooldown[chess.WHITE] = 1`
+3. Call `game.new_game()`
+4. Assert all `freeze_cooldown` and `jump_cooldown` values are 0
+
+#### Owner
+Team 11
+
+---
+
+### TC-42 — Spell Cast Flags Reset
+
+#### Description
+Verify that per-turn spell flags are reset after starting a new game.
+
+#### Test Inputs
+- Flags set to `True`: `spell_casted_this_turn`, `jump_casted_this_turn`, `freeze_targeting`
+
+#### Expected Results
+- All flags are `False`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Set `game.spell_casted_this_turn = True`
+2. Set `game.jump_casted_this_turn = True`
+3. Set `game.freeze_targeting = True`
+4. Call `game.new_game()`
+5. Assert all flags are `False`
+
+#### Owner
+Team 11
+
+---
+
+## Module 5: Move Lifecycle
+
+### TC-43 — Move Switches Turn
+
+#### Description
+Verify that a valid move correctly switches the turn to the opposite player.
+
+#### Test Inputs
+- Move: `e2` → `e4`
+
+#### Expected Results
+- Turn changes from White to Black
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Assert `game.board.turn == chess.WHITE`
+2. Call `game.make_move(chess.E2, chess.E4)`
+3. Assert `game.board.turn == chess.BLACK`
+
+#### Owner
+Team 11
+
+---
+
+### TC-44 — Move Updates Board State
+
+#### Description
+Verify that a moved piece appears on the destination square.
+
+#### Test Inputs
+- Move: `e2` → `e4`
+
+#### Expected Results
+- A white pawn exists at `e4`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Call `game.make_move(chess.E2, chess.E4)`
+2. Assert piece exists at `chess.E4`
+3. Assert piece type is `PAWN` and color is `WHITE`
+
+#### Owner
+Team 11
+
+---
+
+### TC-45 — Illegal Move Rejected
+
+#### Description
+Verify that invalid chess moves are rejected and not applied.
+
+#### Test Inputs
+- Move: `b1` → `b3` (illegal knight move)
+
+#### Expected Results
+- `make_move()` returns `False`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Call `result = game.make_move(chess.B1, chess.B3)`
+2. Assert `result is False`
+3. Assert `game.board.piece_at(chess.B3)` is `None`
+
+#### Owner
+Team 11
+
+---
+
+### TC-46 — Cannot Move Opponent Piece
+
+#### Description
+Verify that a player cannot move the opponent's pieces.
+
+#### Test Inputs
+- Move: `e7` → `e5` (White tries to move Black's pawn)
+
+#### Expected Results
+- Move is rejected
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance (White to move)
+
+#### Test Steps
+1. Call `result = game.make_move(chess.E7, chess.E5)`
+2. Assert `result is False`
+3. Assert destination square `chess.E5` remains empty
+
+#### Owner
+Team 11
+
+---
+
+### TC-47 — Move History Exists After Move
+
+#### Description
+Verify that successful moves are recorded in the move stack.
+
+#### Test Inputs
+- Move: `e2` → `e4`
+
+#### Expected Results
+- Move stack length increases by 1
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Call `game.make_move(chess.E2, chess.E4)`
+2. Assert `len(game.board.move_stack) == 1`
+
+#### Owner
+Team 11
+
+---
+
+### TC-48 — Check State Detected
+
+#### Description
+Verify that the system correctly detects check during gameplay.
+
+#### Test Inputs
+- Scholar’s mate sequence
+
+#### Expected Results
+- `game.board.is_check() == True`
+
+#### Dependencies
+- `python-chess` library
+- `SpellChessGame` from `spell_logic.py`
+
+#### Initialization
+- Create a new `SpellChessGame` instance
+
+#### Test Steps
+1. Play sequence: `e4`, `e5`, `Qh5`, `Nc6`, `Bc4`, `Nf6`, `Qxf7`
+2. Assert `game.board.is_check()` is `True`
+
+#### Owner
+Team 11
+---
 # Defect Summary
 
 | Defect # | TC(s) | Location in Code | Description |
