@@ -47,3 +47,15 @@ Since our original requirements document did not discuss *any* non-functional re
 [6.1] The system shall be modular, allowing individual components like game and spell logic to be implemented in separate functions.
 
 [6.2] The system shall support unit testing of core functionality, including move validation and spell mechanics.
+
+## Specification Defects (Added in Phase 4)
+| Specification | Defect  | Description |
+|----------|-------|-------------|
+| SS-A | D-11, D-13 | Incorrect initial game setup. |
+| SS-B | D-01 | Freeze spell move behavior. |
+| SS-B | D-05 | Conflict between casting rules in the SRS (Specifications) and Spell Chess implementation. |
+| SS-B | D-06 | Conflict between Freeze spell logic for blocked moved. |
+| SS-B | D-08, D-09 | Missing jump move validation. |
+| SS-B | D-10 | Jump does not clearly indicate that space must be empty. |
+| SS-C | D-12 | Move history should be tracked according to SRS (Specifications). |
+| SS-D | D-15 | Check detection implementation. |
