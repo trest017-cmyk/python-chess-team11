@@ -578,6 +578,31 @@ class TestMoveLifecycle:
         game.make_move(chess.H5, chess.F7)
 
         assert game.board.is_check()
+    
+    def test_en_passant_execution(self):
+        """TC-49 | Verify En Passant capture works and removes the captured pawn."""
+        game = SpellChessGame()
+        fen = "rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3"
+        game.board.set_fen(fen)
+        result = game.make_move(chess.E5, chess.D6)
+
+        assert result is True
+        assert game.board.piece_at(chess.D6).piece_type == chess.PAWN
+        assert game.board.piece_at(chess.D5) is None
+
+    def test_pawn_promotion(self):
+        """TC-50 | Verify pawn promotion replaces pawn with selected piece (Queen)."""
+        game = SpellChessGame()
+        fen = "8/P7/8/8/8/8/8/k6K w - - 0 1"
+        game.board.set_fen(fen)
+        move = chess.Move(chess.A7, chess.A8, promotion=chess.QUEEN)
+        result = game.board.push(move) 
+        game.after_move_pushed()
+
+        piece = game.board.piece_at(chess.A8)
+        assert piece is not None
+        assert piece.piece_type == chess.QUEEN
+        assert piece.color == chess.WHITE
 
 # ================================================================== #
 #  Game State Display                                                #
