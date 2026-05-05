@@ -297,7 +297,6 @@ class TestJumpRange:
         result = game.cast_jump(chess.A1, chess.A4)
         assert result is False
 
-
 # ================================================================== #
 #  Jump Spell — Charges                                              #
 # ================================================================== #
@@ -322,8 +321,7 @@ class TestJumpCharges:
         game.jump_remaining[chess.WHITE] = 0
         result = game.cast_jump(chess.B1, chess.B3)
         assert result is False
-
-
+        
 # ================================================================== #
 #  Jump Spell — Cooldown                                             #
 # ================================================================== #
@@ -355,8 +353,7 @@ class TestJumpCooldown:
         game.board.turn = chess.WHITE
         game.on_turn_start()
         assert game.jump_cooldown[chess.WHITE] == 1
-
-
+        
 # ================================================================== #
 #  Jump Spell — Once Per Turn                                        #
 # ================================================================== #
@@ -371,7 +368,6 @@ class TestJumpOncePerTurn:
         # Try to jump another piece in the same turn
         result = game.cast_jump(chess.G1, chess.G3)
         assert result is False
-
 
 # ================================================================== #
 #  Jump Spell — Restrictions                                         #
@@ -413,15 +409,85 @@ class TestJumpRestrictions:
 # ================================================================== #
 
 class TestNewGameReset:
-
+    None # remove this once merged
 # ================================================================== #
 #  Move Lifecycle                                                    #
 # ================================================================== #
 
 class TestMoveLifecycle:
+    None # remove this once merged
 
 # ================================================================== #
 #  Game State Display                                                #
 # ================================================================== #
 
 class TestGameStateDisplay:
+
+    """Display should accurately reflect the current game state."""
+
+    def test_status_text_shows_white_turn_at_start(self):
+        """TC-24 | New games should display white turn at start."""
+        game = SpellChessGame()
+        assert game.status_text() == "Turn: White."
+        
+    def test_status_text_shows_black_turn(self):
+        """TC-25 | Display should update when it is black's turn."""
+        game = SpellChessGame()
+        game.board.turn = chess.BLACK
+        assert game.status_text() == "Turn: Black."
+        
+    def test_status_text_shows_check(self):
+        """TC-26 | Display should show check when current player is in check."""
+        game = SpellChessGame()
+        game.board.set_fen("4k3/8/8/8/8/8/8/4R3 b - - 0 1")
+        assert game.status_text() == "Turn: Black (check)."
+        
+    def test_status_text_shows_checkmate_game_over(self):
+        """TC-27 | Display at end of game should show end result."""
+        game = SpellChessGame()
+        game.board.set_fen("7k/6Q1/6K1/8/8/8/8/8 b - - 0 1")
+        assert game.status_text() == "Game over: CHECKMATE — White wins"
+        
+    def test_freeze_info_text_initial_white(self):
+        """TC-28 | Display should show white's initial freeze charges."""
+        game = SpellChessGame()
+        assert game.freeze_info_text() == "Freeze: 5"
+        
+    def test_freeze_info_text_shows_cooldown(self):
+        """TC-29 | Display should show freeze cooldown when active."""
+        game = SpellChessGame()
+        game.freeze_cooldown[chess.WHITE] = 2
+        assert game.freeze_info_text() == "Freeze: 5  (cooldown 2)"
+        
+    def test_freeze_info_text_shows_frozen_area_message(self):
+        """TC-30 | Display should show when current player's pieces are frozen."""
+        game = SpellChessGame()
+        game.board.turn = chess.BLACK
+        game.freeze_effect_color = chess.BLACK
+        game.freeze_effect_plies_left = 1
+        game.freeze_effect_squares = {chess.E7}
+
+        assert game.freeze_info_text() == "Freeze: 5  — pieces in area are frozen"
+        
+    def test_jump_info_text_initial_white(self):
+        """TC-31 | Display should show white's initial jump charges."""
+        game = SpellChessGame()
+        assert game.jump_info_text() == "Jump: 3"
+        
+    def test_jump_info_text_shows_cooldown(self):
+        """TC-32 | Display should show jump cooldown when active."""
+        game = SpellChessGame()
+        game.jump_cooldown[chess.WHITE] = 1
+        assert game.jump_info_text() == "Jump: 3  (cooldown 1)"
+        
+    def test_shows_stalemate_draw(self):
+        """TC-33 | Display should show stalemate draw result."""
+        game = SpellChessGame()
+        game.board.set_fen("7k/5Q2/7K/8/8/8/8/8 b - - 0 1")
+        assert game.status_text() == "Game over: STALEMATE — Draw"
+        
+    def test_shows_black_checkmate_win(self):
+        """TC-34 | Display at end of game should show Black checkmate result."""
+        game = SpellChessGame()
+        game.board.set_fen("7K/6q1/6k1/8/8/8/8/8 w - - 0 1")
+        assert game.status_text() == "Game over: CHECKMATE — Black wins"
