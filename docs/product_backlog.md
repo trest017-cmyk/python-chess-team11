@@ -84,7 +84,7 @@
 
 | ID | Title | Priority | Story Points | Status |
 |----|-------|----------|--------------|--------|
-| PB-01 | Freeze Spell Verification | High | 5 | Not Started |
-| PB-02 | Jump Spell Verification | High | 3 | Not Started |
-| PB-03 | New Game and Turn Lifecycle | High | 3 | Not Started |
-| PB-04 | Test Documentation and Process | Medium | 5 | Not Started |
+| PB-01 | Freeze Spell Verification | High | 5 | Completed |
+| PB-02 | Jump Spell Verification | High | 3 | Completed |
+| PB-03 | New Game and Turn Lifecycle | High | 3 | Completed |
+| PB-04 | Test Documentation and Process | Medium | 5 | Completed |

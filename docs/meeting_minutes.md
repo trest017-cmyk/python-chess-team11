@@ -184,3 +184,32 @@ None. The project scope is complete.
 ### Discussion
 
 Team confirmed that all 19 test failures map cleanly to documented defects D-01 through D-16. The highest-impact defect is D-14 (`make_move()` turn-flip) because it cascades into TC-43 and TC-48 and makes multi-move test sequences unreliable. D-06 (center square excluded from freeze area) also cascades, causing TC-08, TC-08b, TC-09, and TC-11 to fail. Two demo tests provided with the assignment also fail — they cover the same root causes as D-01 and D-11.
+
+---
+
+## Meeting 6 — Sprint Retrospective
+
+**Date:** Sunday, May 4, 2026  
+**Time:** 9:00 PM – 9:45 PM  
+**Location:** Google Meet 
+**Attendees:** Caleb Lee, Sophie Reznik, Konrad Trestka, Nikita Tuli  
+**Scrum Master:** Sophie Reznik
+
+### What Went Well
+
+- Dividing modules by person at the start of sprint planning allowed parallel development with no merge conflicts
+- Writing tests strictly against the spec (before running them) kept everyone objective — defects emerged naturally from test failures rather than from code inspection
+- Early stand-ups surfaced D-07 and D-11 before they could block other work
+- Using separate git branches per module made the PR history traceable and kept reviews focused
+
+### What Did Not Go Well
+
+- The D-14 turn-flip bug in `make_move()` made chaining moves unreliable, forcing us to use `board.push_san()` as a workaround in several Move Lifecycle tests — this created inconsistency in test style across the file
+- TC-49 (en passant) and TC-50 (pawn promotion) were discovered late on Saturday and had to be added in a last-minute commit; a more thorough review of the spec's edge-case sections during sprint planning would have caught these earlier
+- Sprint backlog statuses were not updated in real time — they were backfilled at the end of the sprint, which reduced the board's value as a daily tracking tool
+
+### Next Time Let's Try To...
+
+- Update sprint backlog task statuses immediately after each task is completed rather than batching at the end of the sprint
+- Include an explicit "spec edge case review" step during sprint planning to surface tests like TC-49 and TC-50 before they become last-minute additions
+- Schedule a team-wide read-through of all test modules before the Sprint Review so every member understands the full defect picture, not just their own module
